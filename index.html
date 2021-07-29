@@ -1,0 +1,182 @@
+<!-- 
+=========================================================================================================
+=========================================================================================================
+Created by:
+    Taylor J. Van Allen, MCSA
+    https://www.linkedin.com/in/taylorvanallen
+=========================================================================================================
+=========================================================================================================
+ -->
+
+<!DOCTYPE html>
+<html lang="en-US" style="margin: 0;">
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <title>Taylor J. Van Allen Resource Library</title>
+    </head>
+    <body style="font-family:Verdana, Geneva, Tahoma, sans-serif">
+        <div class="header-container" style="background-color: #2f5d8e; color: #fff">
+
+            <!-- Header -->
+            <div>
+                <h1 style="margin: 0; padding: 5px; font-size: 70px; text-align: center;">Taylor J. Van Allen<br>Education Committee Resource Library</h1>
+            </div>
+
+            <!-- Welcome/explainer text -->
+            <div>
+                <p style="line-height: 1.6; font-size: 20px; margin: 40px 20%; padding: 5px; text-align: center;">
+                    This library aims to help people at all levels find the resources they need to advance their skill sets and careers. 
+                    From certifications to Excel training, computer basics to learning how to write code, there are several free and paid options to help dedicated professionals continue learning!
+                    Use the search box below to filter the table results and get started!
+                </p>
+            </div>
+
+            <!-- Search box filters the table below as the user types in search criteria -->
+            <div style="padding: 35px 0px;">
+                <label for="searchBox" style="padding-left: 5px; font-size: 20px;">Table Search/Filter: </label>
+                <input id="searchBox" class="form-control" type="text" style="padding-left: 5px; width: 30%; font-size: 20px;" placeholder="Type in your search keyword here">
+            </div>
+
+        </div>
+
+
+        <div class="table-container">
+
+
+            <table style="width:100%" class="table table-striped">
+
+
+                <tr class='table-headers' style="height: 50px; background-color: #a02523; color: #fff">
+                    <th style="width:10%;" data-colname="category" data-order="asc">Category</th>
+                    <th style="width:20%;" data-colname="owner" data-order="asc">Owner</th>
+                    <th style="width:40%;" data-colname="description" data-order="asc">Description</th>
+                    <th style="width:15%;" data-colname="websiteURL" data-order="asc">Website</th>
+                    <th style="width:15%;" data-colname="websiteURL" data-order="asc">YouTube</th>
+                </tr>
+
+
+                <!-- This empty table body gets populated on load/refresh or when a user types something into the search/filter box -->
+                <tbody id="myTable">
+
+                </tbody>
+
+
+            </table>
+
+        </div>
+
+
+        <!-- Javascript/jQuery -->
+
+            <script>
+                
+                // Array holds all of the data (like a spreadsheet) that populates the table
+                var myArray = [
+                    {'category':'Membership','owner':'North Texas Chapter of AHRMM (NT AHRMM)', 'description':'North Texas Chapter of AHRMM', 'websiteURL':'https://www.northtexasahrmm.org', 'websiteFriendlyName':'North Texas AHRMM', 'youtubeURL':'', 'youtubeFriendlyName':''},
+                    {'category':'Membership','owner':'The Association for Health Care Resource & Materials Management (AHRMM)', 'description':'AHRMM (National)', 'websiteURL':'https://www.ahrmm.org', 'websiteFriendlyName':'AHRMM | Homepage', 'youtubeURL':'', 'youtubeFriendlyName':''},
+                    {'category':'Certification','owner':'The Association for Health Care Resource & Materials Management (AHRMM)', 'description':'Certified Materials & Resource Professional (CMRP) -- Exam preparation', 'websiteURL':'https://www.ahrmm.org/education/cmrp', 'websiteFriendlyName':'AHRMM | CMRP Certification', 'youtubeURL':'', 'youtubeFriendlyName':''},
+                    {'category':'Certification','owner':'The Association for Health Care Resource & Materials Management (AHRMM)', 'description':'AHRMM Fellow (FAHRMM) -- Information about the Fellow Program for members that currently have CMRP Certification', 'websiteURL':'https://www.ahrmm.org/about/leadership/fellow', 'websiteFriendlyName':'AHRMM | Fellow Program', 'youtubeURL':'', 'youtubeFriendlyName':''},
+                    {'category':'Certification','owner':'International Association For Six Sigma Certification (IASSC)', 'description':'Lean Six Sigma Certification', 'websiteURL':'https://iassc.org/', 'websiteFriendlyName':'IASSC: Lean Six Sigma Certification', 'youtubeURL':'', 'youtubeFriendlyName':''},
+                    {'category':'Certification','owner':'American Society for Quality (ASQ)', 'description':'Six Sigma Certification and Training', 'websiteURL':'https://asq.org/', 'websiteFriendlyName':'ASQ - Certifications', 'youtubeURL':'', 'youtubeFriendlyName':''},
+                    {'category':'Job Postings', 'owner':'The Association for Health Care Resource & Materials Management (AHRMM)', 'description':'AHRMM Career Center -- Search Job Postings', 'websiteURL':'https://careercenter.ahrmm.org/jobs/', 'websiteFriendlyName':'AHRMM Career Center', 'youtubeURL':'', 'youtubeFriendlyName':''},
+                    {'category':'Tutorials/Courses', 'owner':'The Association for Health Care Resource & Materials Management (AHRMM)', 'description':'AHRMM Education Portal -- On-Demand Webinars, Courses, White Papers, Podcasts, Reports, etc', 'websiteURL':'https://www.ahrmm.org/about/education', 'websiteFriendlyName':'AHRMM Education Portal', 'youtubeURL':'', 'youtubeFriendlyName':''},
+                    {'category':'Tutorials/Courses', 'owner':'Goodwill Community Foundation, Inc.', 'description':'Microsoft Office Basics, Excel Basics, Database Basics (Microsoft Access), PowerPoint, Computer Basics, Personal Finance, Career Development, Workplace Skills, etc', 'websiteURL':'https://edu.gcfglobal.org/en/topics/', 'websiteFriendlyName':'GCF - All Topics', 'youtubeURL':'https://www.youtube.com/user/gcflearnfree', 'youtubeFriendlyName':'GCFLearnFree.org - YouTube'},
+                    {'category':'Tutorials/Courses', 'owner':'Leila Gharani', 'description':'Microsoft Office products -- Excel, Power Query, Excel VBA, Outlook, PowerPoint, and Office365', 'websiteURL':'https://www.xelplus.com', 'websiteFriendlyName':'XelPlus', 'youtubeURL':'https://www.youtube.com/c/LeilaGharani/videos', 'youtubeFriendlyName':'Leila Gharani - YouTube'},
+                    {'category':'Tutorials/Courses', 'owner':'My Online Training Hub', 'description':'Excel, Power Query, Power Pivot, Excel Dashboards, Power BI', 'websiteURL':'https://www.myonlinetraininghub.com', 'websiteFriendlyName':'My Online Training Hub', 'youtubeURL':'https://www.youtube.com/c/MyOnlineTrainingHub/videos', 'youtubeFriendlyName':'MyOnlineTrainingHub - YouTube'},
+                    {'category':'Tutorials/Courses', 'owner':'Excel Maven', 'description':'Excel, Advanced Excel Formulas and Functions, PivotTables, Power Query, Power Pivot, DAX, Power BI', 'websiteURL':'https://www.excelmaven.com/', 'websiteFriendlyName':'Excel Maven', 'youtubeURL':'https://www.youtube.com/c/ExcelMaven/videos', 'youtubeFriendlyName':'Excel Maven - YouTube'},
+                    {'category':'Tutorials/Courses', 'owner':'Maven Analytics', 'description':'Excel, Power Query, Power Pivot, Power BI, Tableau, MySQL', 'websiteURL':'https://www.mavenanalytics.io/online', 'websiteFriendlyName':'Maven Analytics', 'youtubeURL':'https://www.youtube.com/channel/UCFqInmJykuVFKzi6uQl_ySg/videos', 'youtubeFriendlyName':'Maven Analytics - YouTube'},
+                    {'category':'Tutorials/Courses', 'owner':'Wise Owl', 'description':'Excel VBA, SQL Server, SSMS, SSRS, SSIS', 'websiteURL':'https://www.wiseowl.co.uk', 'websiteFriendlyName':'Wise Owl Training', 'youtubeURL':'https://www.youtube.com/c/WiseOwlTutorials/videos', 'youtubeFriendlyName':'WiseOwlTutorials - YouTube'},
+                    {'category':'Tutorials/Courses', 'owner':'Guy in a Cube', 'description':'Power BI', 'websiteURL':'https://www.guyinacube.com', 'websiteFriendlyName':'Guy in a Cube', 'youtubeURL':'https://www.youtube.com/c/GuyinaCube/videos', 'youtubeFriendlyName':'Guy in a Cube - YouTube'},
+                    {'category':'Tutorials/Courses', 'owner':'W3Schools', 'description':'Programming Langauges -- Python, R, Java, SQL, HTML, CSS, JavaScript(JS), jQuery, PHP', 'websiteURL':'https://www.w3schools.com/', 'websiteFriendlyName':'W3Schools', 'youtubeURL':'https://www.youtube.com/c/w3schools/videos', 'youtubeFriendlyName':'w3schools.com - YouTube'},
+                    // {'category':'', 'owner':'', 'description':'', 'websiteURL':'', 'websiteFriendlyName':'', 'youtubeURL':'', 'youtubeFriendlyName':''},
+
+                ]
+
+
+                // Keyup event handler (filters table based on what's typed in the search box)
+                $('#searchBox').on('keyup', function() {
+                    var searchValue = $(this).val()
+                    console.log('Search Value:', searchValue)
+
+                    var data = searchTable(searchValue, myArray)
+                    buildTable(data)
+                })
+
+
+                // calls the buildTable function
+                buildTable(myArray)
+
+
+                // Toggle Ascending/Descending Table Sort
+                $('th').on('click', function() {
+                    var column = $(this).data('colname')
+                    var order = $(this).data('order')
+                    var text = $(this).html()
+                    text = text.substring(0, text.length - 1);
+
+                    if (order == 'desc') {
+                        myArray = myArray.sort((a,b) => a[column] > b[column] ? 1 : -1)
+                        $(this).data("order","asc");
+                        text += '&#9660'
+                    } else {
+                        myArray = myArray.sort((a,b) => a[column] < b[column] ? 1 : -1)
+                        $(this).data("order","desc");
+                        text += '&#9650'
+                    }
+
+                    $(this).html(text)
+                    buildTable(myArray)
+                })
+
+                // filters the data table
+                function searchTable(searchValue, data) {
+                    var filteredData = []
+
+                    for (var i = 0; i < data.length; i++) {
+                        searchValue = searchValue.toLowerCase()
+                        var category = data[i].category.toLowerCase()
+                        var owner = data[i].owner.toLowerCase()
+                        var description = data[i].description.toLowerCase()
+                        var websiteURL = data[i].websiteURL.toLowerCase()
+                        var websiteFriendlyName = data[i].websiteFriendlyName.toLowerCase()
+                        var youtubeURL = data[i].youtubeURL.toLowerCase()
+                        var youtubeFriendlyName = data[i].youtubeFriendlyName.toLowerCase()
+
+                        if (category.includes(searchValue) || owner.includes(searchValue) || description.includes(searchValue) || websiteURL.includes(searchValue) || websiteFriendlyName.includes(searchValue) || youtubeURL.includes(searchValue) || youtubeFriendlyName.includes(searchValue)) {
+                            filteredData.push(data[i])
+                        }
+                    }
+
+                    return filteredData
+                }
+
+                // builds/re-builds the table
+                function buildTable(data) {
+                    var table = document.getElementById('myTable')
+                    table.innerHTML = ''
+                    for (var i = 0; i < data.length; i++) {
+                        var colname = `catgory-${i}`
+                        var colname = `owner-${i}`
+                        var colname = `description-${i}`
+                        var colname = `websiteURL-${i}`
+                        var colname = `youtubeURL-${i}`
+
+                        var row = `<tr>
+                                        <td style="height: 50px">${data[i].category}</td>
+                                        <td style="height: 50px">${data[i].owner}</td>
+                                        <td style="height: 50px">${data[i].description}</td>
+                                        <td style="height: 50px"><a href="${data[i].websiteURL}" target="_blank">${data[i].websiteFriendlyName}</a></td>
+                                        <td style="height: 50px"><a href="${data[i].youtubeURL}" target="_blank">${data[i].youtubeFriendlyName}</a></td>
+                                    </tr>`
+                        table.innerHTML += row
+                    }
+                }
+
+            </script>
+
+        
+    </body>
+    <!-- <footer>
+        <p>Taylor J. Van Allen</p>
+    </footer> -->
+</html>
